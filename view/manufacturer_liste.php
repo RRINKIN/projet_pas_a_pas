@@ -26,28 +26,27 @@
         <?php
         if(is_array($result)){
             foreach($result as $r){
-                $id         = $r["id"];
-                $prenom     = $r["prenom"];
-                $nom        = $r["nom"];
-                $is_visible = $r["is_visible"];
+                $id             = $r["id"];
+                $manufacturer   = $r["manufacturer"];
+                $is_visible     = $r["is_visible"];
 
                 // nb : peut également se faire dans la requête sql pour une raison d'optimisation avec un CASE THEN
                 if($is_visible == "1"){
-                    $txt_nom = $nom." ".$prenom;
+                    $txt_manufacturer = $manufacturer;
                     $txt_visible = "<i class=\"fas fa-eye-slash\"></i>";
                     $txt_title = "Masquer cette entrée";
                 }else{
-                    $txt_nom = "<s style='color:#b1b1b1;'>" .$nom." ".$prenom."</s>";
+                    $txt_manufacturer = "<s style='color:#b1b1b1;'>" .$manufacturer."</s>";
                     $txt_visible = "<i class=\"fas fa-eye\"></i>";
                     $txt_title = "Réactiver cette entrée";
                 }
 
                 echo "<p>
-                                        <a href='index.php?p=".$url_page."&id=".$id."&alpha=".$get_alpha."' title='voir les information' class='bt-action'><i class=\"fas fa-info-circle\"></i></a> 
-                                        <a href='index.php?p=".$url_page."&designer_id=".$id."&action=update&alpha=".$get_alpha."&id=".$get_id."' title='éditer cette entrée' class='bt-action'><i class=\"far fa-edit\"></i></a> 
-                                        <a href='index.php?p=".$url_page."&designer_id=".$id."&action=showHide&alpha=".$get_alpha."&id=".$get_id."' title='".$txt_title."' class='bt-action'>".$txt_visible."</a> 
-										".$txt_nom." 
-                                    </p>";
+                        <a href='index.php?p=".$url_page."&id=".$id."&alpha=".$get_alpha."' title='voir les information' class='bt-action'><i class=\"fas fa-info-circle\"></i></a> 
+                        <a href='index.php?p=".$url_page."&manufacturer_id=".$id."&action=update&alpha=".$get_alpha."&id=".$get_id."' title='éditer cette entrée' class='bt-action'><i class=\"far fa-edit\"></i></a> 
+                        <a href='index.php?p=".$url_page."&manufacturer_id=".$id."&action=showHide&alpha=".$get_alpha."&id=".$get_id."' title='".$txt_title."' class='bt-action'>".$txt_visible."</a> 
+                        ".$txt_manufacturer." 
+                    </p>";
             }
         }else{
             echo "<p>Aucun résultat pour la lettre ".$get_alpha."</p>";
@@ -61,7 +60,7 @@
 
         if(isset($show_description) && $show_description){
             ?>
-            <h1><?php echo $detail_nom." ".$detail_prenom; ?></h1>
+            <h1><?php echo $detail_manufacturer; ?></h1>
             <?php
             echo "<p>".$detail_description."</p>";
         }

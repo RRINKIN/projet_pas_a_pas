@@ -71,7 +71,6 @@ function updateAdmin($id, $data){
     }else{
         return false;
     }
-
 }
 
 function showHideAdmin($id){
