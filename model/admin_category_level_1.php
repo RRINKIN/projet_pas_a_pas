@@ -8,9 +8,8 @@ $url_page = "admin_category_level_1";
 // si aucune action n'est définie via le paramètre _GET alors l'action "liste" sera attribuée par défaut
 $get_action = isset($_GET["action"]) ? filter_input(INPUT_GET, 'action', FILTER_SANITIZE_SPECIAL_CHARS) : "liste";
 
-
 // récupération des informations passée en _GET pour cette partie du code (affichage de la liste + détail d'un category_level_1)
-$get_id     = isset($_GET["id"])    ? filter_input(INPUT_GET, 'category_level_id', FILTER_SANITIZE_SPECIAL_CHARS)      : null;
+$get_id     = isset($_GET["category_level_id"])    ? filter_input(INPUT_GET, 'category_level_id', FILTER_SANITIZE_SPECIAL_CHARS)      : null;
 
 // switch sur la variable action afin d'exécuter telle ou telle partie de code
 switch($get_action){
@@ -101,7 +100,7 @@ switch($get_action){
         if(empty($_POST)){
             // récupération des infos dans la DB en utilisant l'id récupéré en GET
             $result             = getCategory_level_1($get_category_level_1_id);
-            $category_level_1   = $result[0]["category_level_1"];
+            $category_level_1   = $result[0]["level_1"];
         }else{
             $category_level_1   = null;
         }

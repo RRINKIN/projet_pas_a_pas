@@ -48,7 +48,7 @@ if(file_exists("model/".$page.".php")){
                                 <li><a href="index.php?p=admin_manufacturer">Manufacturier</a></li>
                                 <li><a href="index.php?p=admin_shape">Etat</a></li>
                                 <li><a href="index.php?p=admin_delivery">Livraison</a></li>
-                                <li><a href="index.php?p=admin_level1">Catégorie</a></li>
+                                <li><a href="index.php?p=admin_category_level_1">Catégorie</a></li>
                                 <li><a href="index.php?p=admin_level2">Sous-catégorie</a></li>
                                 <li><a href="index.php?p=admin_ad">Fiche produit</a></li>
                             </ul>

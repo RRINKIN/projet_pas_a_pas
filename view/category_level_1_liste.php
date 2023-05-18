@@ -14,7 +14,7 @@
         <?php
         if(is_array($result)){
             foreach($result as $r){
-                $id                 = $r["id"];
+                $id                 = $r["category_level_1_id"];
                 $category_level_1   = $r["level_1"];
                 $is_visible         = $r["is_visible"];
 

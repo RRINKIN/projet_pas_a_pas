@@ -7,7 +7,7 @@ function getCategory_level_1($id = 0){
     $cond = $id > 0 ? " WHERE category_level_1_id = ".$id : "";
 
     // requete permettant de récupérer les designers suivant le(s) filtre(s)
-    $sql = "SELECT category_level_1_id as id, level_1, is_visible 
+    $sql = "SELECT category_level_1_id, level_1, is_visible 
                 FROM category_level_1 
                 ".$cond." 
                 ORDER BY level_1 ASC;";
