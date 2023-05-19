@@ -17,20 +17,26 @@ function getCategory_level_2($id = 0){
     return requeteResultat($sql);
 }
 
+function getCategory_level_2_for_select($id = 0){
+    if(!is_numeric($id)){
+        return false;
+    }
+
+    // requete permettant de récupérer les category_level_2 suivant le(s) filtre(s)
+    $sql = "SELECT category_level_2_id, level_2, level_1 
+            FROM category_level_2 
+            LEFT JOIN category_level_1 ON category_level_1.category_level_1_id = category_level_2.category_level_1_id 
+            ORDER BY level_1 ASC, level_2 ASC;";
+
+    // envoi de la requete vers le serveur de DB et stockage du résultat obtenu dans la variable result (array qui contiendra toutes les données récupérées)
+    // renvoi de l'info
+    return requeteResultat($sql);
+}
+
 function getCategory_level_2_by_level_1($id = 0){
     if(!is_numeric($id)){
         return false;
     }
-    // création de la condition WHERE en fonctions des infos passées en paramètre
-    $cond = $id > 0 ? " WHERE category_level_2_id = ".$id : "";
-
-    // requete permettant de récupérer les category_level_2 suivant le(s) filtre(s)
-    $sql = "SELECT * 
-            FROM category_level_2
-            ".$cond." 
-            ORDER BY level_2 ASC;";
-
-
     // création de la condition WHERE en fonctions des infos passées en paramètre
     $cond = $id > 0 ? " WHERE category_level_1_id = ".$id : "";
 

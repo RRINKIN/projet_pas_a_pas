@@ -70,7 +70,6 @@ function ExecRequete($query){
 // fonction permettant de protéger la chaîne de caractère, échapper les caractères spéciaux et à nettoyer les entrées de l'utilisateur avant de les stocker dans la base de données
 function convert2DB($string){
     global $mysqli;
-
     return $mysqli->real_escape_string(trim($string));
 }
 // fonction permettant d'annuler l'échappement effectué par la fonction convert2DB et à restaurer la chaîne de caractères originale
