@@ -23,17 +23,7 @@ switch($get_action){
 
         $result = getShape(0);
 
-        // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un shape en particulier
-        if(!is_null($get_id) && is_numeric($get_id)){
-            // utilisation de la fonction getshape pour récupérer un shape en particulier
-            $result_detail         = getShape($get_id);
-            // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-            $detail_shape          = $result_detail[0]["shape_title"];
-            $detail_description    = $result_detail[0]["description"];
-            // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-            $show_description = true;
-        }
-        break;
+    break;
 
     // dans ce cas-ci, on désire ajouter un shape
     // deux cas de figure :
@@ -73,7 +63,7 @@ switch($get_action){
             $page_view = "shape_form";
 
             // si form() retourne false, l'insertion peut avoir lieu
-        }else{
+        }else {
             // création d'un tableau qui contiendra les données à passer à la fonction d'insert
             $data_values                = array();
             $data_values["shape_title"] = $post_shape_title;
@@ -92,19 +82,8 @@ switch($get_action){
             $page_view = "shape_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getShape(0);
-            //
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un shape en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getshape pour récupérer l'info du shape précédemment sélectionné
-                $result_detail = getShape($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_shape            = $result_detail[0]["shape_title"];
-                $detail_description    = $result_detail[0]["description"];
-                // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-                $show_description = true;
-            }
         }
-        break;
+    break;
 
     case "update":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
@@ -169,21 +148,7 @@ switch($get_action){
             $page_view = "shape_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getShape(0);
-            // génération du tableau contenant toutes les lettres de l'alphabet et qui sera utilisée dans la partie affichage (switch(view) => pagination)
-            $alphabet = range('A', 'Z');
-            //
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un shape en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getshape pour récupérer l'info du shape précédemment sélectionné
-                $result_detail = getShape($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_shape            = $result_detail[0]["shape_title"];
-                $detail_description    = $result_detail[0]["description"];
-                // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-                $show_description = true;
-            }
         }
-
         break;
 
     case "showHide":
@@ -204,21 +169,7 @@ switch($get_action){
         $page_view = "shape_liste";
         // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
         $result = getShape(0);
-        // génération du tableau contenant toutes les lettres de l'alphabet et qui sera utilisée dans la partie affichage (switch(view) => pagination)
-        $alphabet = range('A', 'Z');
-        //
-        // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un shape en particulier
-        if(!is_null($get_id) && is_numeric($get_id)){
-            // utilisation de la fonction getshape pour récupérer l'info du shape précédemment sélectionné
-            $result_detail = getShape($get_id);
-            // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-            $detail_detail         = $result_detail[0]["shape_title"];
-            $detail_description    = $result_detail[0]["description"];
-            // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-            $show_description = true;
-        }
-
-        break;
+    break;
 }
 
 ?>

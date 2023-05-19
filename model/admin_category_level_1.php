@@ -82,16 +82,8 @@ switch($get_action){
             $page_view = "category_level_1_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getCategory_level_1(0);
-            //
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getcategory_level_1 pour récupérer l'info du category_level_1 précédemment sélectionné
-                $result_detail = getCategory_level_1($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_category_level_1       = $result_detail[0]["category_level_1"];
-            }
         }
-        break;
+    break;
 
     case "update":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
@@ -149,18 +141,9 @@ switch($get_action){
             $page_view = "category_level_1_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getCategory_level_1(0);
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getcategory_level_1 pour récupérer l'info du category_level_1 précédemment sélectionné
-                $result_detail = getCategory_level_1($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_category_level_1       = $result_detail[0]["category_level_1"];
-                // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-                $show_description = true;
-            }
         }
 
-        break;
+    break;
 
     case "showHide":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
@@ -180,18 +163,7 @@ switch($get_action){
         $page_view = "category_level_1_liste";
         // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
         $result = getCategory_level_1(0);
-        //
-        // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-        if(!is_null($get_id) && is_numeric($get_id)){
-            // utilisation de la fonction getcategory_level_1 pour récupérer l'info du category_level_1 précédemment sélectionné
-            $result_detail    = getCategory_level_1($get_id);
-            // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-            $detail_detail    = $result_detail[0]["category_level_1"];
-            // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-            $show_description = true;
-        }
-
-        break;
+    break;
 }
 
 ?>

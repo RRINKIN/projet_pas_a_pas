@@ -29,7 +29,7 @@ switch($get_action){
             // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
             $detail_delivery       = $result_detail[0]["delivery"];
         }
-        break;
+    break;
 
     // dans ce cas-ci, on désire ajouter un delivery
     // deux cas de figure :
@@ -83,14 +83,6 @@ switch($get_action){
             $page_view = "delivery_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getDelivery(0);
-            //
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un delivery en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getdelivery pour récupérer l'info du delivery précédemment sélectionné
-                $result_detail = getDelivery($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_delivery       = $result_detail[0]["delivery"];
-            }
         }
         break;
 
@@ -150,18 +142,8 @@ switch($get_action){
             $page_view = "delivery_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getDelivery(0);
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un delivery en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getdelivery pour récupérer l'info du delivery précédemment sélectionné
-                $result_detail = getDelivery($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_delivery       = $result_detail[0]["delivery"];
-                // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-                $show_description = true;
-            }
         }
-
-        break;
+    break;
 
     case "showHide":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
@@ -181,18 +163,7 @@ switch($get_action){
         $page_view = "delivery_liste";
         // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
         $result = getDelivery(0);
-        //
-        // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un delivery en particulier
-        if(!is_null($get_id) && is_numeric($get_id)){
-            // utilisation de la fonction getdelivery pour récupérer l'info du delivery précédemment sélectionné
-            $result_detail    = getDelivery($get_id);
-            // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-            $detail_detail    = $result_detail[0]["delivery"];
-            // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-            $show_description = true;
-        }
-
-        break;
+    break;
 }
 
 ?>

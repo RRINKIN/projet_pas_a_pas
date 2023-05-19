@@ -43,11 +43,11 @@
                 }
 
                 echo "<p>
-                                        <a href='index.php?p=".$url_page."&id=".$id."&alpha=".$get_alpha."' title='voir les information' class='bt-action'><i class=\"fas fa-info-circle\"></i></a> 
-                                        <a href='index.php?p=".$url_page."&designer_id=".$id."&action=update&alpha=".$get_alpha."&id=".$get_id."' title='éditer cette entrée' class='bt-action'><i class=\"far fa-edit\"></i></a> 
-                                        <a href='index.php?p=".$url_page."&designer_id=".$id."&action=showHide&alpha=".$get_alpha."&id=".$get_id."' title='".$txt_title."' class='bt-action'>".$txt_visible."</a> 
-										".$txt_nom." 
-                                    </p>";
+                        <a href='index.php?p=".$url_page."&id=".$id."&alpha=".$get_alpha."' title='voir les information' class='bt-action'><i class=\"fas fa-info-circle\"></i></a> 
+                        <a href='index.php?p=".$url_page."&designer_id=".$id."&action=update&alpha=".$get_alpha."&id=".$get_id."' title='éditer cette entrée' class='bt-action'><i class=\"far fa-edit\"></i></a> 
+                        <a href='index.php?p=".$url_page."&designer_id=".$id."&action=showHide&alpha=".$get_alpha."&id=".$get_id."' title='".$txt_title."' class='bt-action'>".$txt_visible."</a> 
+                        ".$txt_nom." 
+                    </p>";
             }
         }else{
             echo "<p>Aucun résultat pour la lettre ".$get_alpha."</p>";

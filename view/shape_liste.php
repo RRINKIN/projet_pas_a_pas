@@ -38,4 +38,9 @@
         }
         ?>
     </div>
+    <div class="eight columns">
+        <?php
+        echo isset($msg) && !empty($msg) ? "<div class='missingfield $msg_class'>".$msg."</div>" : "";
+        ?>
+    </div>
 </div>

@@ -10,7 +10,7 @@
 </div>
 
 <div class="row">
-    <div class="twelve columns">
+    <div class="four columns">
         <?php
         if(is_array($result)){
             foreach($result as $r){
@@ -36,6 +36,11 @@
                     </p>";
             }
         }
+        ?>
+    </div>
+    <div class="eight columns">
+        <?php
+        echo isset($msg) && !empty($msg) ? "<div class='missingfield $msg_class'>".$msg."</div>" : "";
         ?>
     </div>
 </div>

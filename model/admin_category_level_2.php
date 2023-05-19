@@ -1,6 +1,7 @@
 <?php
 verifConnexion();
 include_once("lib/category_level_2.php");
+include_once("lib/category_level_1.php");
 
 $url_page = "admin_category_level_2";
 
@@ -19,16 +20,12 @@ switch($get_action){
         // définition de la variable view qui sera utilisée dans la partie <body> du html pour afficher une certaine partie du code
         $page_view = "category_level_2_liste";
 
-        $result = getCategory_level_2(0);
+        $result = getCategory_level_1(0);
 
-        // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-        if(!is_null($get_id) && is_numeric($get_id)){
-            // utilisation de la fonction getcategory_level_1 pour récupérer un category_level_1 en particulier
-            $result_detail               = getCategory_level_2($get_id);
-            // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-            $detail_category_level_2     = $result_detail[0]["category_level_2"];
+        foreach ($result as $key => $level1_value) {
+            $result[$key]['children'] = getCategory_level_2_by_level_1($level1_value["category_level_1_id"]);
         }
-        break;
+    break;
 
     // dans ce cas-ci, on désire ajouter un category_level_2
     // deux cas de figure :
@@ -38,6 +35,7 @@ switch($get_action){
         // récupération / initialisation des données qui transitent via le formulaire via la fonction init_tagname
         $array_name = [
             "category_level_2" => ["string", null],
+            "category_level_1_id" => ["int", null],
         ];
         // appel de la fonction qui est chargée d'initialiser et récupérer les données provenant du formulaire sur base du array $array_name
         init_tagname($array_name);
@@ -48,12 +46,23 @@ switch($get_action){
         $post_description   = isset($_POST["description"])  ? filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS)    : null;
         */
 
+        // création du menu select sur base de la catégorie Level_1
+        $option = [0 => '=== choix ==='];
+        $category_level_1 = getCategory_level_1(0);
+        foreach ($category_level_1 as $key => $value) {
+            $option[$value['category_level_1_id']] = $value['level_1']; 
+        }
+
         // initialisation du array qui contiendra la définitions des différents champs du formulaire
         $input = [];
         // ajout des différents champs du formulaire
         $input[] = addLayout("<h4>Ajouter une sous-catégorie</h4>");
         $input[] = addLayout("<div class='row'>");
-        $input[] = addInput('Category_level_1', ["type" => "text", "value" => $post_category_level_2, "name" => "category_level_2", "class" => "u-full-width"], true, "twelve columns");
+        //addSelect($label, $properties, $option, $defaultValue, $required = false, $div_class = "")
+        $input[] = addSelect('Category_level_1', ['name' => 'category_level_1_id'], $option, $post_category_level_1_id, true, "twelve columns");
+        $input[] = addLayout("</div>");
+        $input[] = addLayout("<div class='row'>");
+        $input[] = addInput('Category_level_2', ["type" => "text", "value" => $post_category_level_2, "name" => "category_level_2", "class" => "u-full-width"], true, "twelve columns");
         $input[] = addLayout("</div>");
         $input[] = addSubmit(["value" => "envoyer", "name" => "submit"], "\t\t<br />\n");
         // appel de la fonction form qui est chargée de générer le formulaire à partir du array de définition des champs $input ainsi que de la vérification de la validitée des données si le formulaire été soumis
@@ -67,7 +76,9 @@ switch($get_action){
         }else{
             // création d'un tableau qui contiendra les données à passer à la fonction d'insert
             $data_values                        = array();
+            $data_values["category_level_1_id"] = $post_category_level_1_id;
             $data_values["category_level_2"]    = $post_category_level_2;
+            
             // exécution de la requête
             if(insertCategory_level_2($data_values)){
                 // message de succes qui sera affiché dans le <body>
@@ -82,31 +93,25 @@ switch($get_action){
             $page_view = "category_level_2_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getCategory_level_2(0);
-            //
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getcategory_level_1 pour récupérer l'info du category_level_1 précédemment sélectionné
-                $result_detail = getCategory_level_2($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_category_level_2       = $result_detail[0]["category_level_2"];
-            }
         }
-        break;
+    break;
 
     case "update":
-        // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
+        // récupération avec filtre de nettoyage FILTER_SANITIZE_NUMBER_INT
         $get_category_level_2_id = isset($_GET["category_level_2_id"]) ? filter_input(INPUT_GET, 'category_level_2_id', FILTER_SANITIZE_NUMBER_INT) : null;
         // récupération des données correspondant uniquement dans le cas du premier affichage du formulaire
         if(empty($_POST)){
-            // récupération des infos dans la DB en utilisant l'id récupéré en GET
             $result             = getCategory_level_2($get_category_level_2_id);
+            $category_level_1   = $result[0]["category_level_1_id"];
             $category_level_2   = $result[0]["level_2"];
-        }else{
-            $category_level_2   = null;
+        }else {
+            $category_level_1   = 0;
+            $category_level_2   = 0;
         }
         // récupération / initialisation des données qui transitent via le formulaire via la fonction init_tagname
         $array_name = [
-            "category_level_2" => ["string", $category_level_2]
+            "category_level_1_id" => ["int", $category_level_1],
+            "category_level_2" => ["string", $category_level_2],
         ];
         // appel de la fonction qui est chargée d'initialiser et récupérer les données provenant du formulaire sur base du array $array_name
         init_tagname($array_name);
@@ -118,10 +123,21 @@ switch($get_action){
         $post_description   = isset($_POST["description"])  ? filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS)    : $description;
         */
 
+        // création du menu select sur base de la catégorie Level_1
+        $option = [0 => '=== choix ==='];
+        $category_level_1 = getCategory_level_1(0);
+        foreach ($category_level_1 as $key => $value) {
+            $option[$value['category_level_1_id']] = $value['level_1']; 
+        }
+
         // initialisation du array qui contiendra la définitions des différents champs du formulaire
         $input = [];
         // ajout des différents champs du formulaire
         $input[] = addLayout("<h4>Modifier une catégorie level 2</h4>");
+        $input[] = addLayout("<div class='row'>");
+        //addSelect($label, $properties, $option, $defaultValue, $required = false, $div_class = "")
+        $input[] = addSelect('Category_level_1', ['name' => 'category_level_1_id'], $option, $post_category_level_1_id, true, "twelve columns");
+        $input[] = addLayout("</div>");
         $input[] = addLayout("<div class='row'>");
         $input[] = addInput('Category_level_2', ["type" => "text", "value" => $post_category_level_2, "name" => "category_level_2", "class" => "u-full-width"], true, "twelve columns");
         $input[] = addLayout("</div>");
@@ -134,6 +150,7 @@ switch($get_action){
             $page_view = "category_level_2_form";
         }else{
             $data_values                        = array();
+            $data_values["category_level_1_id"] = $post_category_level_1_id;
             $data_values["category_level_2"]    = $post_category_level_2;
 
             if(updateCategory_level_2($get_category_level_2_id, $data_values)){
@@ -149,18 +166,9 @@ switch($get_action){
             $page_view = "category_level_2_liste";
             // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
             $result = getCategory_level_2(0);
-            // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-            if(!is_null($get_id) && is_numeric($get_id)){
-                // utilisation de la fonction getcategory_level_2 pour récupérer l'info du category_level_2 précédemment sélectionné
-                $result_detail = getCategory_level_2($get_id);
-                // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-                $detail_category_level_2       = $result_detail[0]["category_level_2"];
-                // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-                $show_description = true;
-            }
         }
 
-        break;
+    break;
 
     case "showHide":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
@@ -179,19 +187,11 @@ switch($get_action){
         // on demande à afficher la liste des category_level_2
         $page_view = "category_level_2_liste";
         // pour afficher cette liste, on a besoin de les récupérer au préalable dans la db
-        $result = getCategory_level_2(0);
-        //
-        // si le paramètre id n'est pas null et qu'il est numérique alors cela veut dire qu'il est demandé d'afficher le détail d'un category_level_1 en particulier
-        if(!is_null($get_id) && is_numeric($get_id)){
-            // utilisation de la fonction getcategory_level_1 pour récupérer l'info du category_level_2 précédemment sélectionné
-            $result_detail    = getCategory_level_2($get_id);
-            // interrogation de la variable (array) result_detail pour en extraire les données récupérées et les attribuer à des variables qui seront utilisée dans la partie affichage (switch(view) => pagination)
-            $detail_detail    = $result_detail[0]["category_level_2"];
-            // paramètre permettant de "dire" si il faut oui ou non afficher un détail dans la partie affichage
-            $show_description = true;
+        $result = getCategory_level_1(0);
+        foreach ($result as $key => $level1_value) {
+            $result[$key]['children'] = getCategory_level_2_by_level_1($level1_value["category_level_1_id"]);
         }
-
-        break;
+    break;
 }
 
 ?>

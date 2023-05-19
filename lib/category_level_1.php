@@ -10,7 +10,7 @@ function getCategory_level_1($id = 0){
     $sql = "SELECT category_level_1_id, level_1, is_visible 
                 FROM category_level_1 
                 ".$cond." 
-                ORDER BY level_1 ASC;";
+                ORDER BY level_1 ASC;"; 
     // envoi de la requete vers le serveur de DB et stockage du résultat obtenu dans la variable result (array qui contiendra toutes les données récupérées)
     // renvoi de l'info
     return requeteResultat($sql);
