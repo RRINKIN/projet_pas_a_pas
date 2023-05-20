@@ -122,15 +122,17 @@ switch($get_action){
 
             $manufacturer   = $result[0]["manufacturer"];
             $description    = $result[0]["description"];
-        }else{
-            $manufacturer       = null;
+        }else {
+            $manufacturer   = null;
             $description    = null;
         }
+        
         // récupération / initialisation des données qui transitent via le formulaire via la fonction init_tagname
         $array_name = [
             "manufacturer" => ["string", $manufacturer],
             "description" => ["string", $description]
         ];
+        
         // appel de la fonction qui est chargée d'initialiser et récupérer les données provenant du formulaire sur base du array $array_name
         init_tagname($array_name);
 
@@ -143,6 +145,7 @@ switch($get_action){
 
         // initialisation du array qui contiendra la définitions des différents champs du formulaire
         $input = [];
+        
         // ajout des différents champs du formulaire
         $input[] = addLayout("<h4>Modifier un manufacturer</h4>");
         $input[] = addLayout("<div class='row'>");
@@ -152,6 +155,7 @@ switch($get_action){
         $input[] = addTextarea('Parcours / profil', array("name" => "description", "class" => "u-full-width"), $post_description, true, "twelve columns");
         $input[] = addLayout("</div>");
         $input[] = addSubmit(["value" => "envoyer", "name" => "submit"], "\t\t<br />\n");
+        
         // appel de la fonction form qui est chargée de générer le formulaire à partir du array de définition des champs $input ainsi que de la vérification de la validitée des données si le formulaire été soumis
         $show_form = form("form_contact", "index.php?p=".$url_page."&action=update&manufacturer_id=".$get_manufacturer_id."&id=".$get_id."&alpha=".$get_alpha, "post", $input);
 

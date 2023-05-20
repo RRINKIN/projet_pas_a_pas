@@ -19,6 +19,7 @@ function getProduct($id = 0, $alpha = ""){
     // envoi de la requete vers le serveur de DB et stockaqge du résultat obtenu dans la variable result (array qui contiendra toutes les données récupérées)
     // renvoi de l'info
     return requeteResultat($sql);
+    print_r($sql);
 }
 
 function insertProduct($data){
@@ -52,19 +53,19 @@ function insertProduct($data){
                         date_add) 
                     VALUES
                         (
-                            '$category_level_2_id',  
-                            '$admin_id',             
-                            '$shape_id',             
-                            '$designer_id',          
-                            '$manufacturer_id',      
-                            '$ad_title',             
-                            '$ad_description',       
-                            '$ad_description_detail',
-                            '$price',                
-                            '$price_htva',           
-                            '$amount_tva',           
-                            '$price_delivery',       
-                            '$date_add'             
+                        '$category_level_2_id',  
+                        '$admin_id',             
+                        '$shape_id',             
+                        '$designer_id',          
+                        '$manufacturer_id',      
+                        '$ad_title',             
+                        '$ad_description',       
+                        '$ad_description_detail',
+                        '$price',                
+                        '$price_htva',           
+                        '$amount_tva',           
+                        '$price_delivery',       
+                        '$date_add'             
                         );
                     ";
     // exécution de la requête
@@ -76,17 +77,52 @@ function updateProduct($id, $data){
         return false;
     }
 
-    $prenom         = convert2DB($data["prenom"]);
-    $nom            = convert2DB($data["nom"]);
-    $description    = convert2DB($data["description"]);
+    $category_level_2_id         = convert2DB($data["category_level_2_id"]);
+    $admin_id                    = convert2DB($data["admin_id"]);
+    $shape_id                    = convert2DB($data["shape_id"]);
+    $designer_id                 = convert2DB($data["designer_id"]);
+    $manufacturer_id             = convert2DB($data["manufacturer_id"]);
+    $ad_title                    = convert2DB($data["ad_title"]);
+    $ad_description              = convert2DB($data["ad_description"]);
+    $ad_description_detail       = convert2DB($data["ad_description_detail"]);
+    $price_htva                  = convert2DB($data["price_htva"]);
+    $amount_tva                  = $price_htva*0.21;
+    $price                       = $price_htva+$amount_tva;
+    $price_delivery              = convert2DB($data["price_delivery"]);
+    $date_add                    = date('Y-m-d h:i:s');
 
-    $sql = "UPDATE product 
-                SET 
-                    firstname = '".$prenom."',
-                    lastname = '".$nom."',
-                    description = '".$description."'
-            WHERE product_id = ".$id.";
-            ";
+    $sql = "INSERT INTO ad
+                        (category_level_2_id, 
+                        admin_id, 
+                        shape_id, 
+                        designer_id, 
+                        manufacturer_id, 
+                        ad_title, 
+                        ad_description, 
+                        ad_description_detail, 
+                        price, 
+                        price_htva, 
+                        amount_tva,
+                        price_delivery, 
+                        date_add) 
+                    VALUES
+                        (
+                        '$category_level_2_id',  
+                        '$admin_id',             
+                        '$shape_id',             
+                        '$designer_id',          
+                        '$manufacturer_id',      
+                        '$ad_title',             
+                        '$ad_description',       
+                        '$ad_description_detail',
+                        '$price',                
+                        '$price_htva',           
+                        '$amount_tva',           
+                        '$price_delivery',       
+                        '$date_add'             
+                        );
+                    ";
+
     // exécution de la requête
     return ExecRequete($sql);
 }
@@ -97,10 +133,10 @@ function showHideProduct($id){
     }
     // Méthode CASE WHEN sql
     $sql = "UPDATE ad 
-                SET is_visible = CASE 
-                    WHEN is_visible = '1' THEN '0' 
-                    ELSE '1' 
-                    END
+            SET is_visible = CASE 
+                WHEN is_visible = '1' THEN '0' 
+                ELSE '1' 
+                END
             WHERE ad_id = ".$id.";";
     // exécution de la requête
     return ExecRequete($sql);
