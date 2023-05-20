@@ -89,41 +89,29 @@ function updateProduct($id, $data){
     $amount_tva                  = $price_htva*0.21;
     $price                       = $price_htva+$amount_tva;
     $price_delivery              = convert2DB($data["price_delivery"]);
-    $date_add                    = date('Y-m-d h:i:s');
+    $date_add                    = date('Y-m-d h:i:s'); // je prend garde la date de mise à jour
 
-    $sql = "INSERT INTO ad
-                        (category_level_2_id, 
-                        admin_id, 
-                        shape_id, 
-                        designer_id, 
-                        manufacturer_id, 
-                        ad_title, 
-                        ad_description, 
-                        ad_description_detail, 
-                        price, 
-                        price_htva, 
-                        amount_tva,
-                        price_delivery, 
-                        date_add) 
-                    VALUES
-                        (
-                        '$category_level_2_id',  
-                        '$admin_id',             
-                        '$shape_id',             
-                        '$designer_id',          
-                        '$manufacturer_id',      
-                        '$ad_title',             
-                        '$ad_description',       
-                        '$ad_description_detail',
-                        '$price',                
-                        '$price_htva',           
-                        '$amount_tva',           
-                        '$price_delivery',       
-                        '$date_add'             
-                        );
-                    ";
+    $sql = "UPDATE ad 
+            SET
+                category_level_2_id     = '".$category_level_2_id."', 
+                admin_id                = '".$admin_id."', 
+                shape_id                = '".$shape_id."', 
+                designer_id             = '".$designer_id."', 
+                manufacturer_id         = '".$manufacturer_id."', 
+                ad_title                = '".$ad_title."', 
+                ad_description          = '".$ad_description."', 
+                ad_description_detail   = '".$ad_description_detail."', 
+                price                   = '".$price."', 
+                price_htva              = '".$price_htva."', 
+                amount_tva              = '".$amount_tva."',
+                price_delivery          = '".$price_delivery."', 
+                date_add                = '".$date_add."'            
+            WHERE
+                ad_id = ".$id.";
+            ";
 
     // exécution de la requête
+    // retourne TRUE/FALSE en fonction de la réponse
     return ExecRequete($sql);
 }
 

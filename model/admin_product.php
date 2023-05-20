@@ -35,8 +35,7 @@ switch($get_action){
     case "add":
         // récupération / initialisation des données qui transitent via le formulaire via la fonction init_tagname
         $array_name = [
-            "category_level_2_id" => ["int", null],  
-            "admin_id" => ["int", null],             
+            "category_level_2_id" => ["int", null],            
             "shape_id" => ["int", null],             
             "designer_id" => ["int", null],          
             "manufacturer_id" => ["int", null],      
@@ -164,7 +163,6 @@ switch($get_action){
             // récupération des infos dans la DB en utilisant l'id récupéré en GET
             $result                = getProduct($get_product_id);
             $category_level_2_id   = $result[0]["category_level_2_id"];
-            $_SESSION              = $result[0]["admin_id"];
             $shape_id              = $result[0]["shape_id"];
             $designer_id           = $result[0]["designer_id"];
             $manufacturer_id       = $result[0]["manufacturer_id"];
@@ -174,10 +172,7 @@ switch($get_action){
             $price_htva            = $result[0]["price_htva"];
             $price_delivery        = $result[0]["price_delivery"];
         }else {
-            $manufacturer          = null;
-            $description           = null;
             $category_level_2_id   = null;
-            $_SESSION              = null;
             $shape_id              = null;
             $designer_id           = null;
             $manufacturer_id       = null;
@@ -189,8 +184,7 @@ switch($get_action){
         }
         // récupération / initialisation des données qui transitent via le formulaire via la fonction init_tagname
         $array_name = [
-            "category_level_2_id" => ["int", $category_level_2_id],  
-            "admin_id" => ["int", $_SESSION],             
+            "category_level_2_id" => ["int", $category_level_2_id],             
             "shape_id" => ["int", $shape_id],             
             "designer_id" => ["int", $designer_id],          
             "manufacturer_id" => ["int", $manufacturer_id],      
@@ -265,6 +259,9 @@ switch($get_action){
         $input[] = addTextarea('Déscription complète', array("name" => "ad_description_detail", "class" => "u-full-width"), $post_ad_description_detail, true, "twelve columns");
         $input[] = addLayout("</div>");
         $input[] = addLayout("<div class='row'>");
+        // Les numbers ci-dessous sont limités à la taille autorisée des champs dans la DB "float(10,2)"
+        // erreur si on dépasse cette valeur.
+        // Un if pourrait être fait avant "updateProduct". 
         $input[] = addInput('Prix htva', ["type" => "number", "value" => $post_price_htva, "name" => "price_htva", "class" => "u-full-width"], true, "six columns");
         $input[] = addInput('Prix de la livraison', ["type" => "number", "value" => $post_price_delivery, "name" => "price_delivery", "class" => "u-full-width"], true, "six columns");
         $input[] = addLayout("</div>");
@@ -278,8 +275,8 @@ switch($get_action){
             $page_view = "product_form";
         }else {
             $data_values                            = array();         
-            $data_values["category_level_2_id"]     = $post_category_level_2_id;  
-            $data_values["admin_id"]                = $post_admin_id; 
+            $data_values["category_level_2_id"]     = $post_category_level_2_id; 
+            $data_values["admin_id"]                = $_SESSION["admin_id"]; 
             $data_values["shape_id"]                = $post_shape_id;            
             $data_values["designer_id"]             = $post_designer_id;          
             $data_values["manufacturer_id"]         = $post_manufacturer_id;      
@@ -287,7 +284,7 @@ switch($get_action){
             $data_values["ad_description"]          = $post_ad_description;       
             $data_values["ad_description_detail"]   = $post_ad_description_detail;
             $data_values["price_htva"]              = $post_price_htva;
-            $data_values["delivery"]                = $post_price_delivery;       
+            $data_values["price_delivery"]          = $post_price_delivery;       
 
             if(updateProduct($get_product_id, $data_values)){
                 // message de succes qui sera affiché dans le <body>
