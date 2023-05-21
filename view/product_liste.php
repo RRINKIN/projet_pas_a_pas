@@ -50,7 +50,7 @@
                         <strong>".$txt_product_title."</strong> 
                         <br>Catégorie : ".$category_level."
                         <br>Designer : ".$designer."
-                        <br>Manufacturer : ".$manufacturer."   
+                        <br>Manufacturer : ".$manufacturer."
                     </p>";
             }
         }else{

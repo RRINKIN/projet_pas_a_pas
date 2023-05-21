@@ -33,7 +33,7 @@ function getCategory_level_2_for_select($id = 0){
     return requeteResultat($sql);
 }
 
-function getCategory_level_2_by_level_1($id = 0){
+function getCategory_level_2_by_level_1($id){
     if(!is_numeric($id)){
         return false;
     }

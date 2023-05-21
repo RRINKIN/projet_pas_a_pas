@@ -265,6 +265,10 @@ switch($get_action){
         $input[] = addInput('Prix htva', ["type" => "number", "value" => $post_price_htva, "name" => "price_htva", "class" => "u-full-width"], true, "six columns");
         $input[] = addInput('Prix de la livraison', ["type" => "number", "value" => $post_price_delivery, "name" => "price_delivery", "class" => "u-full-width"], true, "six columns");
         $input[] = addLayout("</div>");
+        //addFileMulti($label, $properties, $required = false, $div_class = "", $copy_dir = "", $qty = 2, $new_name = "")
+        $input[] = addLayout("<div class='row'>");
+        $input[] = addFileMulti("Photo de l'article", ["name" => "photo[]", "id" => "photo"], false, "u-full-width", "../upload/normal/", 4, "[$get_product_id]-[numéro de la photo].jpg");
+        $input[] = addLayout("</div>");
         $input[] = addSubmit(["value" => "envoyer", "name" => "submit"], "\t\t<br />\n");
         
         // appel de la fonction form qui est chargée de générer le formulaire à partir du array de définition des champs $input ainsi que de la vérification de la validitée des données si le formulaire été soumis

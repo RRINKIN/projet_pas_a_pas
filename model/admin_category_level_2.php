@@ -20,11 +20,12 @@ switch($get_action){
         // définition de la variable view qui sera utilisée dans la partie <body> du html pour afficher une certaine partie du code
         $page_view = "category_level_2_liste";
 
+        // definir une boucle qui imbrique les "categ_lvl2" dans les "categ_lvl_1"
         $result = getCategory_level_1(0);
-
         foreach ($result as $key => $level1_value) {
             $result[$key]['children'] = getCategory_level_2_by_level_1($level1_value["category_level_1_id"]);
         }
+        //print_q($result);
     break;
 
     // dans ce cas-ci, on désire ajouter un category_level_2

@@ -8,7 +8,7 @@ function getProduct($id = 0, $alpha = ""){
     $cond .= $id > 0 ? " AND ad_id = ".$id : "";
 
     // requete permettant de récupérer les products suivant le(s) filtre(s)
-    $sql = "SELECT * 
+    $sql = "SELECT A.*, D.firstname, D.lastname, M.manufacturer, C1.level_1, C2.level_2 
             FROM ad AS A
             LEFT JOIN designer AS D ON D.designer_id = A.designer_id
             LEFT JOIN manufacturer AS M ON M.manufacturer_id = A.manufacturer_id
@@ -19,7 +19,6 @@ function getProduct($id = 0, $alpha = ""){
     // envoi de la requete vers le serveur de DB et stockaqge du résultat obtenu dans la variable result (array qui contiendra toutes les données récupérées)
     // renvoi de l'info
     return requeteResultat($sql);
-    print_r($sql);
 }
 
 function insertProduct($data){
