@@ -38,7 +38,7 @@ function insertAdminUser($data){
                         city) 
                     VALUES
                         ('$login',
-                        '$password',
+                        MD5('$password'),
                         '$pseudo',
                         '$level_access',
                         '$street',
@@ -66,13 +66,16 @@ function updateAdminUser($id, $data){
 
     $sql = "UPDATE admin 
             SET 
-                login           = '".$login."',
-                password        = '".$password."',
+                login           = '".$login."',";
+                if (!empty($password)) {
+                    $sql .= "password = MD5('".$password."'),";    
+                }
+                $sql .= "
                 level_access    = '".$level_access."',
                 street          = '".$street."',
                 num             = '".$num."',
                 zip             = '".$zip."',
-                city            = '".$city."',
+                city            = '".$city."'
             WHERE admin_id = ".$id.";
             ";
     // exécution de la requête

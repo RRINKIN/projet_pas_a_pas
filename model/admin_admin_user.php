@@ -68,7 +68,7 @@ switch($get_action){
         $input = [];
 
         // création des options du select Manufacturer
-        $option_level_access = [0 => 'Super administrateur', 1 => 'Simple administrateur'];
+        $option_level_access = [1 => 'Super administrateur', 2 => 'Simple administrateur'];
 
         // ajout des différents champs du formulaire
         $input[] = addLayout("<h4>Ajouter un administrateur</h4>");
@@ -77,11 +77,9 @@ switch($get_action){
         $input[] = addInput('Mot-de-passe', ["type" => "text", "value" => $post_password, "name" => "password", "class" => "u-full-width"], true, "four columns");
         $input[] = addInput('Pseudo', ["type" => "text", "value" => $post_pseudo, "name" => "pseudo", "class" => "u-full-width"], true, "four columns");
         $input[] = addLayout("</div>");
-
         $input[] = addLayout("<div class='row'>");
-        $input[] = addRadioCheckbox("Niveau access", ["value" => $post_level_access, "name" => "level_access", "id" => "level_access", "class" => "u-full-width"], $option_level_access, false, $type="radio");
+        $input[] = addRadioCheckbox("Niveau access", ["name" => "level_access", "id" => "level_access"], $option_level_access, $post_level_access, true, "radio", "u-full-width");
         $input[] = addLayout("</div>");
-        
         $input[] = addLayout("<h5>ADRESSE POSTALE</h5>");
         $input[] = addLayout("<div class='row'>");
         $input[] = addInput('Rue', ["type" => "text", "value" => $post_street, "name" => "street", "class" => "u-full-width"], true, "eight columns");
@@ -92,15 +90,16 @@ switch($get_action){
         $input[] = addInput('Localité', ["type" => "text", "value" => $post_city, "name" => "city", "class" => "u-full-width"], true, "eight columns");
         $input[] = addLayout("</div>");
         $input[] = addSubmit(["value" => "envoyer", "name" => "submit"], "\t\t<br />\n");
+
         // appel de la fonction form qui est chargée de générer le formulaire à partir du array de définition des champs $input ainsi que de la vérification de la validitée des données si le formulaire été soumis
         $show_form = form("form_contact", "index.php?p=".$url_page."&action=add", "post", $input);
+
         // si form() ne retourne pas false et retourne un string alors le formulaire doit être affiché
         if($show_form != false){
             // définition de la variable view qui sera utilisée pour afficher la partie du <body> du html nécessaire à l'affichage du formulaire
             $page_view = "admin_user_form";
-
             // si form() retourne false, l'insertion peut avoir lieu
-        }else{
+        }else {
             // création d'un tableau qui contiendra les données à passer à la fonction d'insert
             $data_values                = array();
             $data_values["login"]       = $post_login;
@@ -133,7 +132,7 @@ switch($get_action){
 
     case "update":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
-        $get_admin_user_id = isset($_GET["admin_id"]) ? filter_input(INPUT_GET, 'admin_id', FILTER_SANITIZE_NUMBER_INT) : null;
+        $get_admin_user_id = isset($_GET["admin_user_id"]) ? filter_input(INPUT_GET, 'admin_user_id', FILTER_SANITIZE_NUMBER_INT) : null;
 
         // récupération des données correspondant uniquement dans le cas du premier affichage du formulaire
         if(empty($_POST)){
@@ -164,7 +163,7 @@ switch($get_action){
             "login" => ["string", $login],
             "password" => ["string", $password],
             "pseudo" => ["string", $pseudo],
-            "level_access" => ["string", $level_access],
+            "level_access" => ["int", $level_access],
             "street" => ["string", $street],
             "num" => ["string", $num],
             "zip" => ["string", $zip],
@@ -184,17 +183,17 @@ switch($get_action){
         // initialisation du array qui contiendra la définitions des différents champs du formulaire
         $input = [];
         // création des options des radio buttons level_access
-        $option_level_access = [0 => 'Super administrateur', 1 => 'Simple administrateur'];
+        $option_level_access = [1 => 'Super administrateur', 2 => 'Simple administrateur'];
 
         // ajout des différents champs du formulaire
         $input[] = addLayout("<h4>Modifier un administrateur</h4>");
         $input[] = addLayout("<div class='row'>");
         $input[] = addInput('Identifiant/E-mail', ["type" => "text", "value" => $post_login, "name" => "login", "class" => "u-full-width"], true, "four columns");
-        $input[] = addInput('Mot-de-passe', ["type" => "text", "value" => $post_password, "name" => "password", "class" => "u-full-width"], false, "four columns");
+        $input[] = addInput('Mot-de-passe', ["type" => "text", "value" => " ", "name" => "password", "class" => "u-full-width"], false, "four columns");
         $input[] = addInput('Pseudo', ["type" => "text", "value" => $post_pseudo, "name" => "pseudo", "class" => "u-full-width"], true, "four columns");
         $input[] = addLayout("</div>");
         $input[] = addLayout("<div class='row'>");
-        $input[] = addRadioCheckbox("Niveau access", ["value" => $post_level_access, "name" => "level_access", "id" => "level_access", "class" => "u-full-width"], $option_level_access, false, $type="radio");
+        $input[] = addRadioCheckbox("Niveau access", ["name" => "level_access", "id" => "level_access"], $option_level_access, $post_level_access, true, "radio", "u-full-width");
         $input[] = addLayout("</div>");
         $input[] = addLayout("<h5>ADRESSE POSTALE</h5>");
         $input[] = addLayout("<div class='row'>");
@@ -208,21 +207,21 @@ switch($get_action){
         $input[] = addSubmit(["value" => "envoyer", "name" => "submit"], "\t\t<br />\n");
         
         // appel de la fonction form qui est chargée de générer le formulaire à partir du array de définition des champs $input ainsi que de la vérification de la validitée des données si le formulaire été soumis
-        $show_form = form("form_contact", "index.php?p=".$url_page."&action=update&admin_id=".$get_admin_user_id."&id=".$get_id."&alpha=".$get_alpha, "post", $input);
+        $show_form = form("form_contact", "index.php?p=".$url_page."&action=update&admin_user_id=".$get_admin_user_id."&id=".$get_id."&alpha=".$get_alpha, "post", $input);
 
         if($show_form != false){
             // définition de la variable view qui sera utilisée pour afficher la partie du <body> du html nécessaire à l'affichage du formulaire
             $page_view = "admin_user_form";
         }else{
             $data_values                = array();
-            $data_value["login"]        = $post_login;
-            $data_value["password"]     = $post_password;
-            $data_value["pseudo"]       = $post_pseudo;
-            $data_value["level_access"] = $post_level_access;
-            $data_value["street"]       = $post_street;
-            $data_value["num"]          = $post_num;
-            $data_value["zip"]          = $post_zip;
-            $data_value["city"]         = $post_city;
+            $data_values["login"]        = $post_login;
+            $data_values["password"]     = $post_password;
+            $data_values["pseudo"]       = $post_pseudo;
+            $data_values["level_access"] = $post_level_access;
+            $data_values["street"]       = $post_street;
+            $data_values["num"]          = $post_num;
+            $data_values["zip"]          = $post_zip;
+            $data_values["city"]         = $post_city;
 
             if(updateAdminUser($get_admin_user_id, $data_values)){
                 // message de succes qui sera affiché dans le <body>
@@ -244,7 +243,7 @@ switch($get_action){
 
     case "showHide":
         // récupération avec filtre de netoyage FILTER_SANITIZE_NUMBER_INT
-        $get_admin_user_id = isset($_GET["admin_id"]) ? filter_input(INPUT_GET, 'admin_id', FILTER_SANITIZE_NUMBER_INT) : null;
+        $get_admin_user_id = isset($_GET["admin_user_id"]) ? filter_input(INPUT_GET, 'admin_user_id', FILTER_SANITIZE_NUMBER_INT) : null;
 
         if(showHideAdminUser($get_admin_user_id)){
             // message de succes qui sera affiché dans le <body>
