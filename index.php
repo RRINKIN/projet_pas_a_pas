@@ -40,7 +40,7 @@ if(file_exists("model/".$page.".php")){
                 <div class="container">
                     <ul>
                         <li><a href="index.php?p=admin_item">Gestion des pages</a></li>
-                        <li><a href="index.php?p=admin_user">Gestion des utilisateurs</a></li>
+                        <li><a href="index.php?p=admin_admin_user">Gestion des utilisateurs</a></li>
                         <li>
                             <a>Gestion du shop</a>
                             <ul>
