@@ -1,4 +1,4 @@
 <?php
 verifConnexion();
-$page_view = "home";
+$page_view = "template_home";
 ?>

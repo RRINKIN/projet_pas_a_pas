@@ -3,7 +3,7 @@ session_start();
 include_once('base/config.php');
 
 // initialisation des variables
-$page = isset($_GET["p"]) ? $_GET["p"] : "default";
+$page = isset($_GET["p"]) ? $_GET["p"] : "default"; // "default" est la page affichée par défaut.
 
 if(file_exists("model/".$page.".php")){
     include_once("model/".$page.".php");

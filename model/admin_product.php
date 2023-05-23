@@ -267,12 +267,12 @@ switch($get_action){
         $input[] = addLayout("</div>");
         //addFileMulti($label, $properties, $required = false, $div_class = "", $copy_dir = "", $qty = 2, $new_name = "")
         $input[] = addLayout("<div class='row'>");
-        $input[] = addFileMulti("Photo de l'article", ["name" => "photo[]", "id" => "photo"], false, "u-full-width", "../upload/normal/", 4, "[$get_product_id]-[numéro de la photo].jpg");
+        $input[] = addFileMulti("Photo de l'article", ["name" => "photo[]", "id" => "photo"], false, "u-full-width", "../upload/normal/", 4, "[$get_product_id]-[photo].jpg");
         $input[] = addLayout("</div>");
         $input[] = addSubmit(["value" => "envoyer", "name" => "submit"], "\t\t<br />\n");
         
         // appel de la fonction form qui est chargée de générer le formulaire à partir du array de définition des champs $input ainsi que de la vérification de la validitée des données si le formulaire été soumis
-        $show_form = form("form_contact", "index.php?p=".$url_page."&action=update&product_id=".$get_product_id."&id=".$get_id."&alpha=".$get_alpha, "post", $input);
+        $show_form = form("form_contact", "index.php?p=".$url_page."&action=update&product_id=".$get_product_id."&id=".$get_id."&alpha=".$get_alpha, "post", $input, "", true);
 
         if($show_form != false){
             // définition de la variable view qui sera utilisée pour afficher la partie du <body> du html nécessaire à l'affichage du formulaire
