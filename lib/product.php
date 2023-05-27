@@ -21,6 +21,11 @@ function getProduct($id = 0, $alpha = ""){
     return requeteResultat($sql);
 }
 
+function getProductsCount(){
+    $ad_count = 'SELECT COUNT(ad_id) FROM ad';
+    return requeteResultat($ad_count);
+}
+
 function insertProduct($data){
     $category_level_2_id         = convert2DB($data["category_level_2_id"]);
     $admin_id                    = convert2DB($data["admin_id"]);

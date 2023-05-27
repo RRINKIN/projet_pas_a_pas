@@ -1,10 +1,11 @@
 <?php
-function getCategory_level_1($id = 0){
+function getCategory_level_1($id = 0, $is_visible = false){
     if(!is_numeric($id)){
         return false;
     }
     // création de la condition WHERE en fonctions des infos passées en paramètre
-    $cond = $id > 0 ? " WHERE category_level_1_id = ".$id : "";
+    $cond = $id > 0 ? " WHERE category_level_1_id = ".$id : " WHERE 1 ";
+    $cond .= $is_visible === false ? "" : " AND is_visible ='".$is_visible."'"; 
 
     // requete permettant de récupérer les category_level_1 suivant le(s) filtre(s)
     $sql = "SELECT category_level_1_id, level_1, is_visible 
