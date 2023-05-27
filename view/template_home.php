@@ -19,7 +19,7 @@
         <section class="container">
             <div class="row">
                 <?php
-                $limit = 3;
+                $limit = 6;
                 for ($i=0; $i < $limit; $i++) { 
                     $ad_title           = $produits[$i]["ad_title"];
                     $ad_firstName       = $produits[$i]["firstname"];
@@ -29,6 +29,7 @@
                     $ad_price           = $produits[$i]["price"];
                     $ad_manufacturer    = $produits[$i]["manufacturer"];
                     $ad_date            = $produits[$i]["ad_description_detail"];
+                    $designer_id              = $produits[$i]["designer_id"];
                     // récupération de la date
                     $ad_year            = substr($ad_date, 22, 4);
                     echo 
@@ -44,7 +45,7 @@
                         <div class="subheader">
                             <span class="fa fa-bars"></span> <a href="" title=""></a>
                             <span class="separator">|</span>
-                            <span class="fa fa-pencil"></span> <a href="" title="">'.$ad_firstName.' '.$ad_lastName.'</a>
+                            <span class="fa fa-pencil"></span> <a href="index.php?p=admin_designer&id='.$designer_id.'" title="">'.$ad_firstName.' '.$ad_lastName.'</a>
                             <span class="separator">|</span>
                             <span class="fa fa-building-o"></span> <a href="" title=""><small style="opacity:.5;">-'.$ad_manufacturer.'-</small></a>
                         </div>
@@ -52,7 +53,7 @@
                     <div class="une_txt">
                         <p>
                             '.$ad_description_100.'
-                            <a href="././template_detail.html" title="">[...]</a>
+                            <a href="index.php?p=detail" title="">[...]</a>
                             <b>'.$ad_price.'€</b>
                         </p>
                     </div>
@@ -67,7 +68,6 @@
                     echo '<li><a href="" class="active">'.$i.'</a></li>';
                 }
                 ?>
-                <li>...</li>
                 <li><a href='' title='résultats suivants'>></a></li>
                 <li><a href='' title='derniers résultats'>>>|</a></li>
             </ul>
